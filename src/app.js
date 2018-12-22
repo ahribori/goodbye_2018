@@ -19,20 +19,6 @@ const port = process.argv[2] || process.env.PORT || config.port;
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-// Resolve client example
-app.get('/', (req, res) => {
-  fs.readFile(path.resolve('client_example', 'index.html'),
-    function (err, data) {
-      if (err) {
-        res.writeHead(500);
-        return res.end('Error loading index.html');
-      }
-      res.writeHead(200);
-      data = data.toString().replace(/<%=host%>/gi, req.headers.host);
-      res.end(data);
-    });
-});
-
 // set public path
 app.use('/', express.static(path.resolve('public')));
 

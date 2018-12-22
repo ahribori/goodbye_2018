@@ -23,7 +23,7 @@ const renderMessage = function(message, to) {
   const height = document.body.getBoundingClientRect().height;
 
   const positionY = getRandomNumberFromArea(150, height - 150);
-  const fontSize = getRandomNumberFromArea(24, 40);
+  const fontSize = getRandomNumberFromArea(20, 28);
   const duration = getRandomNumberFromArea(5, 12);
 
   const $messageContainer = $('<div class="messageContainer marquee youth"></div>').css({
@@ -31,7 +31,6 @@ const renderMessage = function(message, to) {
     color: '#ffffff',
     'font-size': fontSize + 'px',
     'animation-duration': duration + 's',
-    'text-shadow': '1px 1px grey',
   });
 
   const $message = $('<div class="message">' + message + '</div>');

@@ -15,6 +15,6 @@ module.exports = io => {
   });
 
   SendMessageEventEmitter.on('event::send', (payload) => {
-    io.of('/').emit('message::fromServer', payload.message);
+    io.of('/').emit('message::fromServer', payload);
   });
 };

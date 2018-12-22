@@ -1,6 +1,19 @@
 * {
   box-sizing: border-box;
 }
+
+@font-face {
+  font-family: 'Youth';
+  font-style: normal;
+  font-weight: 400;
+  src: url('//cdn.jsdelivr.net/korean-webfonts/1/orgs/othrs/kywa/Youth/Youth.woff2') format('woff2'), url('//cdn.jsdelivr.net/korean-webfonts/1/orgs/othrs/kywa/Youth/Youth.woff') format('woff');
+}
+
+.youth {
+  font-family: 'Youth', sans-serif;
+}
+
+
 html {
   height: 100%;
 }
@@ -17,4 +30,19 @@ body {
   height: 100%;
   left: 0;
   top: 0;
+}
+
+.message {
+  display: block;
+  position: fixed;
+  width: 100%;
+  left: 0;
+  white-space: nowrap;
+  word-break: keep-all;
+  animation: marquee 5s linear forwards;
+  will-change: transform;
+}
+
+@keyframes marquee {
+  100% { transform: translate3d(100%, 0, 0) }
 }

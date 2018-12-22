@@ -10,18 +10,33 @@ router.post('/message', (req, res) => {
   if (secret !== xSecret) {
     res.status(403).json({
       success: false,
-      message: 'Secret key not matched. Check x-secret header.'
-    })
+      message: 'Secret key not matched. Check x-secret header.',
+    });
   }
 
-  const { message } = req.body;
+  const { message, to } = req.body;
+  if (message || message.trim() === '') {
+    if (message.length > 30) {
+      return res.status(400).json({
+        success: false,
+        message: 'Message too long. (Max length: 30)',
+      });
+    }
 
-  SendMessageEventEmitter.emit('event::send', { message });
+    const messageTo = to && to.trim() !== '' && to.length < 20 ? to : null;
 
-  res.json({
-    success: true,
-    message,
-  });
+    SendMessageEventEmitter.emit('event::send', { message, to: messageTo });
+
+    res.json({
+      success: true,
+      message,
+    });
+  } else {
+    res.status(400).json({
+      success: false,
+      message: 'Bad request: message',
+    });
+  }
 });
 
 module.exports = router;

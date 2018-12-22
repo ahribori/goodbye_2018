@@ -3,7 +3,6 @@
  ============================================*/
 const express = require('express');
 const bodyParser = require('body-parser');
-const fs = require('fs');
 const path = require('path');
 const createServer = require('./socket.io');
 const config = require('./conf');

@@ -19,28 +19,33 @@ const getRandomIndex = function(length) {
   return Math.floor(Math.random() * length);
 };
 
-const colors = [
-  'white',
-  '#ffe066',
-];
-
-const renderMessage = function(message) {
+const renderMessage = function(message, to) {
   const height = document.body.getBoundingClientRect().height;
 
   const positionY = getRandomNumberFromArea(150, height - 150);
-  const fontSize = getRandomNumberFromArea(24, 60);
+  const fontSize = getRandomNumberFromArea(24, 40);
   const duration = getRandomNumberFromArea(5, 12);
 
-  const $message = $('<div class="message marquee youth"></div>')
-    .text(message)
-    .css({
-      top: positionY,
-      color: colors[getRandomIndex(colors.length)],
-      'font-size': fontSize + 'px',
-      'animation-duration': duration + 's',
-      'text-shadow': '1px 1px grey',
+  const $messageContainer = $('<div class="messageContainer marquee youth"></div>').css({
+    top: positionY,
+    color: '#ffffff',
+    'font-size': fontSize + 'px',
+    'animation-duration': duration + 's',
+    'text-shadow': '1px 1px grey',
+  });
+
+  const $message = $('<div class="message">' + message + '</div>');
+
+  if (to) {
+    const $to = $('<div class="to">To. ' + to + '</div>').css({ 'font-size': '0.6em' });
+    $messageContainer.append($to).css({
+      'font-size': 50,
+      color: '#ffe066'
     });
-  $body.append($message);
+  }
+
+  $messageContainer.append($message);
+  $body.append($messageContainer);
 
   setTimeout(function() {
     $message.remove();
@@ -49,7 +54,9 @@ const renderMessage = function(message) {
 
 socket.on('message::fromServer', function(payload) {
   const message = payload.message;
+  const to = payload.to;
+
   if (message) {
-    renderMessage(message);
+    renderMessage(message, to);
   }
 });

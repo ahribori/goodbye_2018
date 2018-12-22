@@ -1,0 +1,7 @@
+port: 8080
+redis:
+  enable: false
+  host: localhost
+  port: 6379
+
+secret: hairshop

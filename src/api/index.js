@@ -14,7 +14,7 @@ router.post('/message', (req, res) => {
     });
   }
 
-  const { message, to } = req.body;
+  const { message, to, from } = req.body;
   if (message || message.trim() === '') {
     if (message.length > 30) {
       return res.status(400).json({
@@ -24,8 +24,9 @@ router.post('/message', (req, res) => {
     }
 
     const messageTo = to && to.trim() !== '' && to.length < 20 ? to : null;
+    const messageFrom = from && from.trim() !== '' && from.length < 20 ? from : null;
 
-    SendMessageEventEmitter.emit('event::send', { message, to: messageTo });
+    SendMessageEventEmitter.emit('event::send', { message, to: messageTo, from: messageFrom });
 
     res.json({
       success: true,
@@ -37,6 +38,13 @@ router.post('/message', (req, res) => {
       message: 'Bad request: message',
     });
   }
+});
+
+router.post('/message/clear', (req, res) => {
+  SendMessageEventEmitter.emit('event::clear');
+  res.json({
+    success: true,
+  });
 });
 
 module.exports = router;

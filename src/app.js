@@ -18,6 +18,13 @@ const port = process.argv[2] || process.env.PORT || config.port;
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+app.get('/message_board', (req, res) => {
+  res.sendFile(path.resolve('public/message_board.html'));
+});
+app.get('/quiz', (req, res) => {
+  res.sendFile(path.resolve('public/quiz.html'));
+});
+
 // set public path
 app.use('/', express.static(path.resolve('public')));
 
